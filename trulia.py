@@ -1,5 +1,5 @@
 """
-Web Crawler to gather Trulia real estate data
+Web Scraper to gather Trulia real estate data
 """
 
 import requests
@@ -19,11 +19,13 @@ from bs4 import BeautifulSoup
 #all[0].find("div", {"class":"mvn"}).text # Address
 #all[0].find("div", {"class":"typeTruncate typeLowlight"}).text # Town, State
 
+state = input("Enter a 2 letter state abbreivation.")
+town = input("Enter a town name.")
+town = town.replace(" ", "_")
+
 l = []
-# for the url: https://www.trulia.com/(2 Letter State Abbvr.)/(Town_Name)
-# Ex. https://www.trulia.com/NJ/Mount_Holly/
-base_url = "https://www.trulia.com/NJ/Mount_Laurel/"
-for page in range(0,30,10):
+base_url = "https://www.trulia.com/" + state + "/" + town + "/"
+for page in range(0,1):
     r = requests.get(base_url)
     c = r.content
     soup = BeautifulSoup(c, "html.parser")
@@ -41,7 +43,11 @@ for page in range(0,30,10):
             pass
         l.append(d)
         
+# Used to convert data into a csv file
 import pandas as pd
+import os 
 df = pd.DataFrame(l)
-df
-df.to_csv("trulia_moorestown_nj.csv")
+#df.to_csv("trulia_Moorestown_NJ.csv")
+convert = "trulia_" + town + "_" + state + ".csv"
+df.to_csv(convert)
+print("Saved to " + os.getcwd())
