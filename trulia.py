@@ -50,4 +50,4 @@ df = pd.DataFrame(l)
 #df.to_csv("trulia_Moorestown_NJ.csv")
 convert = "trulia_" + town + "_" + state + ".csv"
 df.to_csv(convert)
-print("Saved to " + os.getcwd())
+print("Saved to " + os.getcwd() + " as " + convert)
